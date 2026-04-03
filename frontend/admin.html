@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel — IT RoadMap</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet"/>
+</head>
+<body class="admin-body">
+
+  <!-- ==================== ADMİN NAV ==================== -->
+  <nav class="navbar admin-nav">
+    <div class="logo">
+      <span class="logo-bracket">&lt;</span>IT<span class="logo-green">Road</span>Map<span class="logo-bracket">/&gt;</span>
+      <span class="admin-nav-badge">ADMIN</span>
+    </div>
+    <div class="admin-nav-right" id="adminNavRight" style="display:none">
+      <span class="admin-logged-as">👤 <span id="adminLoggedName"></span></span>
+      <a href="index.html" class="nav-item">← Sayta Qayıt</a>
+      <a href="#" onclick="adminLogout()" class="nav-item">Çıxış</a>
+    </div>
+  </nav>
+
+
+  <!-- ==================== ADMİN GİRİŞ ==================== -->
+  <section id="adminLoginSection" class="page admin-login-section">
+    <div class="auth-section">
+      <div class="auth-box admin-login-box">
+        <div class="admin-lock-icon">🛡️</div>
+        <h2 class="auth-title">Admin Girişi</h2>
+        <p style="color:#888; text-align:center; margin-bottom:24px; font-size:13px;">
+          Yalnız adminlər bu panelə daxil ola bilər
+        </p>
+        <div class="form-group">
+          <label>Admin adı</label>
+          <input type="text" id="adminLoginUser" placeholder="admin"/>
+        </div>
+        <div class="form-group">
+          <label>Şifrə</label>
+          <input type="password" id="adminLoginPass" placeholder="••••••••"/>
+        </div>
+        <p id="adminLoginMsg" class="msg"></p>
+        <button class="btn-primary full-btn" onclick="adminLogin()">Admin Girişi</button>
+        <p class="hint">Demo: <b>admin / admin123</b></p>
+        <a href="index.html" class="back-link">← Sayta Qayıt</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== ADMİN PANEL ==================== -->
+  <section id="adminPanelSection" class="page hidden">
+    <div class="admin-section">
+      <h2 class="section-title">// Admin Panel</h2>
+
+      <!-- STATS -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num green" id="statUsers">0</div>
+          <div class="stat-label">Ümumi İstifadəçi</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num green" id="statPro">0</div>
+          <div class="stat-label">Pro İstifadəçi</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="statRevenue">₼0</div>
+          <div class="stat-label">Ümumi Gəlir</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">6</div>
+          <div class="stat-label">Aktiv Sahə</div>
+        </div>
+      </div>
+
+      <!-- TAB SEÇİMİ -->
+      <div class="admin-tabs">
+        <button class="admin-tab-btn active" onclick="showAdminTab('users', this)">👥 İstifadəçilər</button>
+        <button class="admin-tab-btn"        onclick="showAdminTab('payments', this)">💳 Ödənişlər</button>
+        <button class="admin-tab-btn"        onclick="showAdminTab('addUser', this)">➕ İstifadəçi Əlavə Et</button>
+      </div>
+
+      <!-- İSTİFADƏÇİLƏR CƏDVƏLİ -->
+      <div id="tab-users" class="admin-tab-content">
+        <div class="admin-table-wrap">
+          <div class="table-header-row">
+            <h3 class="table-title">İstifadəçilər</h3>
+            <input type="text" id="searchUsers" placeholder="🔍 Axtar..." class="search-input" oninput="filterUsers()"/>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Ad Soyad</th>
+                <th>İstifadəçi adı</th>
+                <th>E-poçt</th>
+                <th>Rol</th>
+                <th>Pro Status</th>
+                <th>Qeydiyyat</th>
+                <th>Əməliyyat</th>
+              </tr>
+            </thead>
+            <tbody id="userTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ÖDƏNİŞLƏR CƏDVƏLİ -->
+      <div id="tab-payments" class="admin-tab-content hidden">
+        <div class="admin-table-wrap">
+          <h3 class="table-title">Kart Məlumatları və Ödənişlər</h3>
+          <p class="table-warning">⚠️ Bu məlumatlar yalnız demo məqsədlidir. Real sistemdə kart məlumatları burada saxlanılmamalıdır.</p>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>İstifadəçi</th>
+                <th>Kart Sahibi</th>
+                <th>Kart Nömrəsi</th>
+                <th>Son İstifadə</th>
+                <th>Məbləğ</th>
+                <th>Tarix</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="paymentTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- İSTİFADƏÇİ ƏLAVƏ ET -->
+      <div id="tab-addUser" class="admin-tab-content hidden">
+        <div class="admin-form-box">
+          <h3 class="table-title">Yeni İstifadəçi Əlavə Et</h3>
+          <div class="admin-form-col">
+            <div class="form-group">
+              <label>Ad Soyad</label>
+              <input type="text" id="newName" placeholder="Ad Soyad"/>
+            </div>
+            <div class="form-group">
+              <label>İstifadəçi adı</label>
+              <input type="text" id="newUsername" placeholder="username"/>
+            </div>
+            <div class="form-group">
+              <label>E-poçt</label>
+              <input type="email" id="newEmail" placeholder="email@example.com"/>
+            </div>
+            <div class="form-group">
+              <label>Şifrə</label>
+              <input type="password" id="newPassword" placeholder="Şifrə"/>
+            </div>
+            <div class="form-group">
+              <label>Rol</label>
+              <select id="newRole">
+                <option value="user">İstifadəçi</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Pro Status</label>
+              <select id="newPro">
+                <option value="false">Pulsuz</option>
+                <option value="true">Pro</option>
+              </select>
+            </div>
+            <p id="adminMsg" class="msg"></p>
+            <button class="btn-primary" onclick="addUser()">Əlavə Et</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>&lt; IT RoadMap / &gt; Admin Panel — 2025</p>
+  </footer>
+
+  <script src="admin new.js"></script>
+</body>
+</html>

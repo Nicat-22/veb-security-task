@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IT RoadMap</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- ==================== NAVİQASİYA ==================== -->
+  <nav class="navbar">
+    <div class="logo">
+      <span class="logo-bracket">&lt;</span>IT<span class="logo-green">Road</span>Map<span class="logo-bracket">/&gt;</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#" onclick="showPage('home')"    class="nav-item active" data-page="home">Ana Səhifə</a></li>
+      <li><a href="#" onclick="showPage('roadmap')" class="nav-item"        data-page="roadmap">Road Map</a></li>
+      <li><a href="#" onclick="showPage('login')"   class="nav-item"        data-page="login" id="loginNavBtn">Giriş</a></li>
+      <li><a href="#" onclick="logout()"            class="nav-item hidden"                   id="logoutBtn">Çıxış (<span id="navUsername"></span>)</a></li>
+    </ul>
+  </nav>
+
+  <!-- ==================== SƏHİFƏ 1: ANA SƏHİFƏ ==================== -->
+  <section id="page-home" class="page">
+    <div class="hero">
+      <div class="hero-text">
+        <p class="hero-tag">// IT dünyasına xoş gəldin</p>
+        <h1>Öz <span class="green">Yolunu</span> Çək.<br/>IT-ni <span class="green">Fəth Et.</span></h1>
+        <p class="hero-desc">Sıfırdan başla. Hər qolu öyrən. İstədiyin sahəni seç və addım-addım irəlilə.</p>
+        <div class="hero-buttons">
+          <button class="btn-primary" onclick="showPage('roadmap')">Road Map-ə Bax →</button>
+          <button class="btn-secondary" onclick="showPage('login')">Qeydiyyat</button>
+        </div>
+      </div>
+      <div class="hero-terminal">
+        <div class="terminal-bar">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green-dot"></span>
+          <span class="terminal-title">terminal</span>
+        </div>
+        <div class="terminal-body">
+          <p><span class="prompt">$</span> <span id="typedText"></span><span class="cursor">|</span></p>
+          <p class="t-output">→ Yolun hazırdır. Başla!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRICING -->
+    <div class="pricing-section">
+      <h2 class="section-title">// Tariflər</h2>
+      <div class="pricing-grid">
+        <div class="pricing-card free-card">
+          <div class="pricing-badge">Pulsuz</div>
+          <div class="pricing-price">₼0<span>/ay</span></div>
+          <h3>Starter</h3>
+          <ul class="pricing-features">
+            <li>✓ Hər sahənin 1-ci addımı</li>
+            <li>✓ Ana səhifə məzmunu</li>
+            <li>✓ Qeydiyyat</li>
+            <li class="locked-feat">✗ Tam Road Map</li>
+            <li class="locked-feat">✗ Sertifikat</li>
+          </ul>
+          <button class="btn-secondary full-btn" onclick="showPage('login')">Başla</button>
+        </div>
+        <div class="pricing-card pro-card">
+          <div class="pricing-badge pro-badge">PRO</div>
+          <div class="pricing-price">₼9.99<span>/ay</span></div>
+          <h3>Professional</h3>
+          <ul class="pricing-features">
+            <li>✓ Bütün Road Map addımları</li>
+            <li>✓ Bütün sahələr tam açıq</li>
+            <li>✓ Prioritet dəstək</li>
+            <li>✓ Sertifikat</li>
+            <li>✓ Yeni məzmunlar</li>
+          </ul>
+          <button class="btn-primary full-btn" onclick="showPaymentModal()">Pro Al →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAHƏLƏR -->
+    <div class="paths-section">
+      <h2 class="section-title">// İT Sahələri</h2>
+      <div class="cards-grid">
+        <div class="card" onclick="showPage('roadmap')">
+          <div class="card-icon">🌐</div>
+          <h3>Web Development</h3>
+          <p>HTML, CSS, JS, React, Node.js</p>
+          <span class="card-level beginner">Başlanğıc</span>
+        </div>
+        <div class="card" onclick="showPage('roadmap')">
+          <div class="card-icon">🔐</div>
+          <h3>Cyber Security</h3>
+          <p>Pentesting, CTF, Network, Linux</p>
+          <span class="card-level medium">Orta</span>
+        </div>
+        <div class="card" onclick="showPage('roadmap')">
+          <div class="card-icon">📊</div>
+          <h3>Data Science</h3>
+          <p>Python, ML, AI, Statistics</p>
+          <span class="card-level medium">Orta</span>
+        </div>
+        <div class="card" onclick="showPage('roadmap')">
+          <div class="card-icon">⚙️</div>
+          <h3>DevOps</h3>
+          <p>Docker, CI/CD, Linux, Cloud</p>
+          <span class="card-level hard">İrəliləmiş</span>
+        </div>
+        <div class="card" onclick="showPage('roadmap')">
+          <div class="card-icon">📱</div>
+          <h3>Mobile Dev</h3>
+          <p>Flutter, React Native, Swift</p>
+          <span class="card-level beginner">Başlanğıc</span>
+        </div>
+        <div class="card" onclick="showPage('roadmap')">
+          <div class="card-icon">🔗</div>
+          <h3>Networking</h3>
+          <p>CCNA, TCP/IP, Routing</p>
+          <span class="card-level medium">Orta</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== SƏHİFƏ 2: ROAD MAP ==================== -->
+  <section id="page-roadmap" class="page hidden">
+    <div class="roadmap-page">
+      <h2 class="section-title">// Road Map Seç</h2>
+      <p class="page-desc">Bir sahə seç, addımları izlə, mövzuları tamamla.</p>
+
+      <div class="tab-buttons">
+        <button class="tab-btn active" onclick="showPath('web', this)">🌐 Web Dev</button>
+        <button class="tab-btn"        onclick="showPath('cyber', this)">🔐 Cyber Security</button>
+        <button class="tab-btn"        onclick="showPath('data', this)">📊 Data Science</button>
+        <button class="tab-btn"        onclick="showPath('devops', this)">⚙️ DevOps</button>
+      </div>
+
+      <!-- FREE BANNER (non-pro users) -->
+      <div id="freeBanner" class="free-banner hidden">
+        <span>🔒 Yalnız 1-ci addım pulsuzdur.</span>
+        <button class="btn-primary small-btn" onclick="showPaymentModal()">Pro Al — ₼9.99/ay</button>
+      </div>
+
+      <!-- WEB DEV -->
+      <div class="path-container" id="path-web">
+        <h3 class="path-title">🌐 Web Development Yolu</h3>
+        <div class="roadmap-steps">
+          <div class="step done">
+            <div class="step-num">1</div>
+            <div class="step-info"><h4>HTML Əsasları</h4><p>Teqlər, formlar, semantik HTML</p></div>
+            <span class="badge done-badge">✓ Tamamlandı</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step pro-step" data-pro="true">
+            <div class="step-num lock-num">🔒</div>
+            <div class="step-info"><h4>CSS Əsasları <span class="pro-tag">PRO</span></h4><p>Selektor, Flexbox, Grid, Animasiya</p></div>
+            <button class="badge pro-unlock-btn" onclick="showPaymentModal()">Kilidi Aç</button>
+          </div>
+          <div class="step-line"></div>
+          <div class="step pro-step" data-pro="true">
+            <div class="step-num lock-num">🔒</div>
+            <div class="step-info"><h4>JavaScript <span class="pro-tag">PRO</span></h4><p>DOM, Funksiyalar, Hadisələr, Fetch API</p></div>
+            <button class="badge pro-unlock-btn" onclick="showPaymentModal()">Kilidi Aç</button>
+          </div>
+          <div class="step-line"></div>
+          <div class="step pro-step" data-pro="true">
+            <div class="step-num lock-num">🔒</div>
+            <div class="step-info"><h4>React.js <span class="pro-tag">PRO</span></h4><p>Komponentlər, Props, State, Hooks</p></div>
+            <button class="badge pro-unlock-btn" onclick="showPaymentModal()">Kilidi Aç</button>
+          </div>
+          <div class="step-line"></div>
+          <div class="step pro-step" data-pro="true">
+            <div class="step-num lock-num">🔒</div>
+            <div class="step-info"><h4>Node.js & Backend <span class="pro-tag">PRO</span></h4><p>Express, REST API, Database</p></div>
+            <button class="badge pro-unlock-btn" onclick="showPaymentModal()">Kilidi Aç</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CYBER SECURITY -->
+      <div class="path-container hidden" id="path-cyber">
+        <h3 class="path-title">🔐 Cyber Security Yolu</h3>
+        <div class="roadmap-steps">
+          <div class="step done">
+            <div class="step-num">1</div>
+            <div class="step-info"><h4>Linux Əsasları</h4><p>Terminal, fayllar, icazələr, skriptlər</p></div>
+            <span class="badge done-badge">✓ Pulsuz</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step pro-step" data-pro="true">
+            <div class="step-num lock-num">🔒</div>
+            <div class="step-info"><h4>Şəbəkə Əsasları <span class="pro-tag">PRO</span></h4><p>TCP/IP, DNS, HTTP, Port tarama</p></div>
+            <button class="badge pro-unlock-btn" onclick="showPaymentModal()">Kilidi Aç</button>
+          </div>
+          <div class="step-line"></div>
+          <div class="step pro-step" data-pro="true">
+            <div class="step-num lock-num">🔒</div>
+            <div class="step-info"><h4>Pentesting <span class="pro-tag">PRO</span></h4><p>Nmap, Burp Suite, Metasploit</p></div>
+            <button class="badge pro-unlock-btn" onclick="showPaymentModal()">Kilidi Aç</button>
+          </div>
+          <div class="step-line"></div>
+          <div class="step pro-step" data-pro="true">
+            <div class="step-num lock-num">🔒</div>
+            <div class="step-info"><h4>CTF Challenges <span class="pro-tag">PRO</span></h4><p>Web, Crypto, Forensics, Reverse</p></div>
+            <button class="badge pro-unlock-btn" onclick="showPaymentModal()">Kilidi Aç</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- DATA SCIENCE -->
+      <div class="path-container hidden" id="path-data">
+        <h3 class="path-title">📊 Data Science Yolu</h3>
+        <div class="roadmap-steps">
+          <div class="step done">
+            <div class="step-num">1</div>
+            <div class="step-info"><h4>Python Əsasları</h4><p>Dəyişənlər, döngülər, funksiyalar</p></div>
+            <span class="badge done-badge">✓ Pulsuz</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step pro-step" data-pro="true">
+            <div class="step-num lock-num">🔒</div>
+            <div class="step-info"><h4>Pandas & Numpy <span class="pro-tag">PRO</span></h4><p>Məlumat analizi, array əməliyyatları</p></div>
+            <button class="badge pro-unlock-btn" onclick="showPaymentModal()">Kilidi Aç</button>
+          </div>
+          <div class="step-line"></div>
+          <div class="step pro-step" data-pro="true">
+            <div class="step-num lock-num">🔒</div>
+            <div class="step-info"><h4>Machine Learning <span class="pro-tag">PRO</span></h4><p>Scikit-learn, Model qurma</p></div>
+            <button class="badge pro-unlock-btn" onclick="showPaymentModal()">Kilidi Aç</button>
+          </div>
+          <div class="step-line"></div>
+          <div class="step pro-step" data-pro="true">
+            <div class="step-num lock-num">🔒</div>
+            <div class="step-info"><h4>Deep Learning <span class="pro-tag">PRO</span></h4><p>TensorFlow, Keras, Neural Networks</p></div>
+            <button class="badge pro-unlock-btn" onclick="showPaymentModal()">Kilidi Aç</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- DEVOPS -->
+      <div class="path-container hidden" id="path-devops">
+        <h3 class="path-title">⚙️ DevOps Yolu</h3>
+        <div class="roadmap-steps">
+          <div class="step done">
+            <div class="step-num">1</div>
+            <div class="step-info"><h4>Linux & Shell</h4><p>Bash, cron, sistem idarəsi</p></div>
+            <span class="badge done-badge">✓ Pulsuz</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step pro-step" data-pro="true">
+            <div class="step-num lock-num">🔒</div>
+            <div class="step-info"><h4>Docker <span class="pro-tag">PRO</span></h4><p>Konteyner, image, docker-compose</p></div>
+            <button class="badge pro-unlock-btn" onclick="showPaymentModal()">Kilidi Aç</button>
+          </div>
+          <div class="step-line"></div>
+          <div class="step pro-step" data-pro="true">
+            <div class="step-num lock-num">🔒</div>
+            <div class="step-info"><h4>Kubernetes <span class="pro-tag">PRO</span></h4><p>Orchestration, Pods, Services</p></div>
+            <button class="badge pro-unlock-btn" onclick="showPaymentModal()">Kilidi Aç</button>
+          </div>
+          <div class="step-line"></div>
+          <div class="step pro-step" data-pro="true">
+            <div class="step-num lock-num">🔒</div>
+            <div class="step-info"><h4>CI/CD & Cloud <span class="pro-tag">PRO</span></h4><p>GitHub Actions, AWS, GCP</p></div>
+            <button class="badge pro-unlock-btn" onclick="showPaymentModal()">Kilidi Aç</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==================== SƏHİFƏ 3: GİRİŞ ==================== -->
+  <section id="page-login" class="page hidden">
+    <div class="auth-section">
+      <div class="auth-box">
+        <div class="auth-tabs">
+          <button class="auth-tab active" onclick="switchTab('loginForm', this)">Giriş</button>
+          <button class="auth-tab"        onclick="switchTab('registerForm', this)">Qeydiyyat</button>
+        </div>
+
+        <!-- GİRİŞ -->
+        <div id="loginForm">
+          <h2 class="auth-title">Sisteme Daxil Ol</h2>
+          <div class="form-group">
+            <label>İstifadəçi adı</label>
+            <input type="text" id="loginUser" placeholder="username"/>
+          </div>
+          <div class="form-group">
+            <label>Şifrə</label>
+            <input type="password" id="loginPass" placeholder="••••••••"/>
+          </div>
+          <p id="loginMsg" class="msg"></p>
+          <button class="btn-primary full-btn" onclick="login()">Daxil Ol</button>
+          <p class="hint">Demo: <b>user / user123</b></p>
+        </div>
+
+        <!-- QEYDIYYAT -->
+        <div id="registerForm" class="hidden">
+          <h2 class="auth-title">Hesab Yarat</h2>
+          <div class="form-group">
+            <label>Ad Soyad</label>
+            <input type="text" id="regName" placeholder="Adın Soyadın"/>
+          </div>
+          <div class="form-group">
+            <label>İstifadəçi adı</label>
+            <input type="text" id="regUser" placeholder="username"/>
+          </div>
+          <div class="form-group">
+            <label>E-poçt</label>
+            <input type="email" id="regEmail" placeholder="email@example.com"/>
+          </div>
+          <div class="form-group">
+            <label>Şifrə</label>
+            <input type="password" id="regPass" placeholder="••••••••"/>
+          </div>
+          <p id="regMsg" class="msg"></p>
+          <button class="btn-primary full-btn" onclick="register()">Qeydiyyatdan Keç</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== ÖDƏNİŞ MODALI ==================== -->
+  <div id="paymentModal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closePaymentModal()">✕</button>
+      <div class="modal-header">
+        <h2>💳 Pro Abunəlik</h2>
+        <p class="modal-subtitle">Bütün Road Map addımlarına tam giriş əldə et</p>
+        <div class="modal-price">₼9.99 <span>/ay</span></div>
+      </div>
+
+      <div id="payStep1">
+        <div class="form-group">
+          <label>Kart üzərindəki ad</label>
+          <input type="text" id="cardName" placeholder="AD SOYAD" style="text-transform:uppercase"/>
+        </div>
+        <div class="form-group">
+          <label>Kart nömrəsi</label>
+          <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCardNum(this)"/>
+        </div>
+        <div class="card-row">
+          <div class="form-group">
+            <label>Son istifadə</label>
+            <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)"/>
+          </div>
+          <div class="form-group">
+            <label>CVV</label>
+            <input type="password" id="cardCvv" placeholder="•••" maxlength="3"/>
+          </div>
+        </div>
+        <p id="payMsg" class="msg"></p>
+        <button class="btn-primary full-btn" onclick="processPayment()">Ödə → ₼9.99</button>
+        <p class="hint" style="margin-top:12px;">🔒 Demo sistem — real ödəniş aparılmır</p>
+      </div>
+
+      <div id="payStep2" class="hidden pay-success">
+        <div class="success-icon">✅</div>
+        <h3>Ödəniş Uğurlu!</h3>
+        <p>Pro abunəliyiniz aktivləşdirildi. Bütün addımlar açıldı!</p>
+        <button class="btn-primary full-btn" onclick="afterPayment()">Road Map-ə Davam Et →</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <p>&lt; IT RoadMap / &gt; — 2025 · Bütün hüquqlar qorunur</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
