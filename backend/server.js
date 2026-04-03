@@ -13,7 +13,25 @@ const app  = express();
 const PORT = process.env.PORT || 3000;
 
 // ── Middleware ────────────────────────────────────────────
-app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
+const allowedOrigins = [
+  'http://localhost:5500',
+  'http://127.0.0.1:5500',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // origin olmayan sorğulara (Postman, curl) icazə ver
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('CORS: icazə verilmədi → ' + origin));
+  },
+  credentials: true
+}));
 app.use(express.json());
 
 // ── Routes ───────────────────────────────────────────────
@@ -48,4 +66,5 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`🚀 Server işləyir: http://localhost:${PORT}`);
   console.log(`📋 API sağlamlıq: http://localhost:${PORT}/api/health`);
+  console.log(`🌐 İcazəli originlər: ${allowedOrigins.join(', ')}`);
 });
