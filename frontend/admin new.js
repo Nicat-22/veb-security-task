@@ -1,7 +1,7 @@
 // ==================== API KONFIQURASIYA ====================
 const API = (location.hostname === '127.0.0.1' || location.hostname === 'localhost')
   ? 'http://localhost:3000/api'
-  : (window.API_BASE_URL || 'http://localhost:3000/api');
+  : 'https://veb-security-backend.onrender.com/api';
 
 function getToken()    { return localStorage.getItem('itrm_admin_token'); }
 function setToken(t)   { localStorage.setItem('itrm_admin_token', t); }
