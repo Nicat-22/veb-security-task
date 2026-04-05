@@ -106,4 +106,26 @@ router.get('/me', authMiddleware, async (req, res) => {
   }
 });
 
+// ── GET /api/auth/setup-admin ─────────────────────────────
+// Admin mövcud deyilsə avtomatik yarat
+router.get('/setup-admin', async (req, res) => {
+  try {
+    const existing = await pool.query(
+      "SELECT id FROM users WHERE username='admin'"
+    );
+    if (existing.rows.length > 0) {
+      return res.json({ message: 'Admin artıq mövcuddur. admin / admin123 ilə giriş edin.' });
+    }
+    const hash = await bcrypt.hash('admin123', 10);
+    await pool.query(
+      `INSERT INTO users (name, username, email, password_hash, role, is_pro)
+       VALUES ($1,$2,$3,$4,$5,$6)`,
+      ['Admin', 'admin', 'admin@itroadmap.az', hash, 'admin', true]
+    );
+    res.json({ message: '✅ Admin yaradıldı! admin / admin123 ilə giriş edin.' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
