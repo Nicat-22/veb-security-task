@@ -49,7 +49,7 @@ router.post('/register', async (req, res) => {
 });
 
 // ── POST /api/auth/login ──────────────────────────────────
-// ⚠️ ZƏİF VERSİYA — SQL Injection mümkündür (demo məqsədli)
+// ✅ TƏHLÜKƏSİZ VERSİYA — Parametrli sorğular istifadə edilir
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
@@ -58,19 +58,24 @@ router.post('/login', async (req, res) => {
   }
 
   try {
-    // ❌ ZƏİF: İstifadəçi məlumatı birbaşa SQL sorğusuna yapışdırılır
-    // Bu SQL Injection hücumuna yol açır!
+    // ✅ TƏHLÜKƏSİZ: $1 parametri SQL injection-ı bloklayır
     const result = await pool.query(
-      `SELECT * FROM users WHERE username='${username}'`
+      'SELECT * FROM users WHERE username=$1',
+      [username.toLowerCase()]
     );
 
     if (result.rows.length === 0) {
       return res.status(401).json({ error: 'Yanlış istifadəçi adı və ya şifrə' });
     }
 
-    const user = result.rows[0];
+    const user  = result.rows[0];
 
-    // ❌ ZƏİF: Şifrə yoxlanmır, birinci tapılan istifadəçi ilə davam edilir
+    // ✅ TƏHLÜKƏSİZ: bcrypt ilə şifrə yoxlanır
+    const match = await bcrypt.compare(password, user.password_hash);
+    if (!match) {
+      return res.status(401).json({ error: 'Yanlış istifadəçi adı və ya şifrə' });
+    }
+
     const token = jwt.sign(
       { id: user.id, username: user.username, role: user.role },
       process.env.JWT_SECRET,
