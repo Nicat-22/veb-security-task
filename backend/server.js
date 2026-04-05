@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors    = require('cors');
+const bcrypt  = require('bcryptjs');
 const pool    = require('./db');
 
 const authRoutes     = require('./routes/auth');
@@ -23,7 +24,6 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function (origin, callback) {
-    // origin olmayan sorğulara (Postman, curl) icazə ver
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
@@ -62,9 +62,32 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Server xətası baş verdi' });
 });
 
+// ── Admin avtomatik yarat ────────────────────────────────
+async function createAdminIfNotExists() {
+  try {
+    const existing = await pool.query(
+      "SELECT id FROM users WHERE username='admin'"
+    );
+    if (existing.rows.length > 0) {
+      console.log('ℹ️  Admin artıq mövcuddur');
+      return;
+    }
+    const hash = await bcrypt.hash('admin123', 10);
+    await pool.query(
+      `INSERT INTO users (name, username, email, password_hash, role, is_pro)
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      ['Admin', 'admin', 'admin@admin.com', hash, 'admin', false]
+    );
+    console.log('✅ Admin istifadəçisi yaradıldı! (admin / admin123)');
+  } catch (err) {
+    console.error('❌ Admin yaratma xətası:', err.message);
+  }
+}
+
 // ── Server başlat ────────────────────────────────────────
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`🚀 Server işləyir: http://localhost:${PORT}`);
   console.log(`📋 API sağlamlıq: http://localhost:${PORT}/api/health`);
   console.log(`🌐 İcazəli originlər: ${allowedOrigins.join(', ')}`);
+  await createAdminIfNotExists();
 });
