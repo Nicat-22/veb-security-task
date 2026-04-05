@@ -1,3 +1,4 @@
+
 const express = require('express');
 const bcrypt  = require('bcryptjs');
 const jwt     = require('jsonwebtoken');
@@ -18,6 +19,7 @@ router.post('/register', async (req, res) => {
   }
 
   try {
+    // Mövcudluq yoxlaması
     const exists = await pool.query(
       'SELECT id FROM users WHERE username=$1 OR email=$2',
       [username.toLowerCase(), email.toLowerCase()]
@@ -49,7 +51,6 @@ router.post('/register', async (req, res) => {
 });
 
 // ── POST /api/auth/login ──────────────────────────────────
-// ✅ TƏHLÜKƏSİZ VERSİYA — Parametrli sorğular istifadə edilir
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
@@ -58,7 +59,6 @@ router.post('/login', async (req, res) => {
   }
 
   try {
-    // ✅ TƏHLÜKƏSİZ: $1 parametri SQL injection-ı bloklayır
     const result = await pool.query(
       'SELECT * FROM users WHERE username=$1',
       [username.toLowerCase()]
@@ -69,9 +69,8 @@ router.post('/login', async (req, res) => {
     }
 
     const user  = result.rows[0];
-
-    // ✅ TƏHLÜKƏSİZ: bcrypt ilə şifrə yoxlanır
     const match = await bcrypt.compare(password, user.password_hash);
+
     if (!match) {
       return res.status(401).json({ error: 'Yanlış istifadəçi adı və ya şifrə' });
     }
@@ -82,6 +81,7 @@ router.post('/login', async (req, res) => {
       { expiresIn: '7d' }
     );
 
+    // Şifrəni cavabdan çıxar
     const { password_hash, ...safeUser } = user;
     res.json({ token, user: safeUser });
   } catch (err) {
@@ -103,28 +103,6 @@ router.get('/me', authMiddleware, async (req, res) => {
     res.json(result.rows[0]);
   } catch (err) {
     res.status(500).json({ error: 'Server xətası' });
-  }
-});
-
-// ── GET /api/auth/setup-admin ─────────────────────────────
-// Admin mövcud deyilsə avtomatik yarat
-router.get('/setup-admin', async (req, res) => {
-  try {
-    const existing = await pool.query(
-      "SELECT id FROM users WHERE username='admin'"
-    );
-    if (existing.rows.length > 0) {
-      return res.json({ message: 'Admin artıq mövcuddur. admin / admin123 ilə giriş edin.' });
-    }
-    const hash = await bcrypt.hash('admin123', 10);
-    await pool.query(
-      `INSERT INTO users (name, username, email, password_hash, role, is_pro)
-       VALUES ($1,$2,$3,$4,$5,$6)`,
-      ['Admin', 'admin', 'admin@itroadmap.az', hash, 'admin', true]
-    );
-    res.json({ message: '✅ Admin yaradıldı! admin / admin123 ilə giriş edin.' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
   }
 });
 
